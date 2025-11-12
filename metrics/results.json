@@ -1,0 +1,10 @@
+{
+  "intent": {
+    "eval_macro_f1": 0.9026902616578022,
+    "eval_accuracy": 0.8714545454545455
+  },
+  "sentiment": {
+    "eval_macro_f1": 0.6979219533340298,
+    "eval_accuracy": 0.7027841094106154
+  }
+}
