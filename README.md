@@ -1,52 +1,19 @@
-\# Smart Support Triage \& Auto-Reply
+# Smart Support Triage & Auto-Reply (DistilBERT)
 
+End-to-end AI untuk triage tiket + auto-reply:
+- **Intent classification** (CLINC OOS, DistilBERT)
+- **Sentiment analysis** (TweetEval, DistilBERT)
+- **Streamlit UI** + `predict.py` API
 
+## Hasil (v1)
+| Model | Macro-F1 | Accuracy |
+|------|----------|----------|
+| Intent (CLINC OOS) | 0.9026902616578022 | 0.8714545454545455 |
+| Sentiment (TweetEval) | 0.6979219533340298 | 0.7027841094106154|
 
-\*\*Singkat:\*\* Klasifikasi intent + sentiment untuk triase tiket, hitung prioritas, dan hasilkan \*suggested reply\*. Ada \*\*API (FastAPI)\*\* dan \*\*UI demo (Streamlit)\*\*, siap diintegrasikan ke \*\*n8n/RPA\*\*.
-
-
-
-\## Nilai Bisnis
-
-\- SLA respon awal < 1 menit via auto-reply.
-
-\- Eskalasi otomatis untuk kasus prioritas tinggi.
-
-\- Konsistensi jawaban \& logging terstruktur.
-
-
-
-\## Arsitektur
-
-Data → Baseline (TF-IDF + LinearSVC / LogReg) → API FastAPI → Streamlit → (opsional) n8n/RPA → Monitoring (Evidently).
-
-
-
-\## Hasil (Baseline)
-
-\- \*\*Intent (banking77)\*\*: Macro-F1 ≈ \*\*0.89\*\*
-
-\- \*\*Sentiment (tweet\_eval)\*\*: Macro-F1 ≈ \*\*0.56\*\*
-
-> Catatan: angka baseline; bisa ditingkatkan dengan DistilBERT.
-
-
-
-\## Cara Jalankan
-
+## Cara jalan
 ```bash
-
-\# 1) aktifkan venv, lalu:
-
-uvicorn api.app:app --reload --port 8000      # API di :8000
-
-\# tab lain:
-
-streamlit run app/streamlit\_app.py            # UI di :8501
-
-\# uji API:
-
-curl -X POST http://127.0.0.1:8000/predict -H "Content-Type: application/json" -d "{\\"text\\":\\"tidak bisa login\\"}"
-
-
-
+pip install -r requirements.txt
+streamlit run app/streamlit_app.py
+# atau:
+python -c "from src.predict import predict_one; print(predict_one('tolong refund transaksi saya'))"
